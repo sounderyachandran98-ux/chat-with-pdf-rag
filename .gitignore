@@ -1,0 +1,16 @@
+.env
+rag_clean/
+venv/
+venv311/
+rag_fresh/
+
+__pycache__/
+*.pyc
+
+faiss_index/
+pdfs/
+
+.chainlit/
+
+test_db/
+chroma_db/
