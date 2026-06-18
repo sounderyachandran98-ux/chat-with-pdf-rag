@@ -2,11 +2,8 @@ chainlit==2.0.0
 langchain
 langchain-community
 langchain-google-genai
-langchain-huggingface
 faiss-cpu
-sentence-transformers
 google-genai
 pypdf
 python-dotenv
-huggingface_hub
 numpy
