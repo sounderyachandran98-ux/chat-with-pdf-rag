@@ -10,7 +10,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 load_dotenv()
 
 embeddings = GoogleGenerativeAIEmbeddings(
-    model="embedding-001"
+    model="models/text-embedding-004"
 )
 
 llm = ChatGoogleGenerativeAI(
