@@ -95,11 +95,44 @@ async def start():
 
     try:
 
-        db = FAISS.from_texts(
-            texts=texts,
-            embedding=embeddings,
-            metadatas=metadatas
-        )
+        batch_size = 50
+        db = None
+
+        for i in range(0, len(texts), batch_size):
+
+            batch_texts = texts[i:i + batch_size]
+            batch_metadatas = metadatas[i:i + batch_size]
+
+            await cl.Message(
+                content=f"Processing batch {(i // batch_size) + 1}"
+            ).send()
+
+            if db is None:
+
+                db = FAISS.from_texts(
+                    texts=batch_texts,
+                    embedding=embeddings,
+                    metadatas=batch_metadatas
+                )
+
+            else:
+
+                temp_db = FAISS.from_texts(
+                    texts=batch_texts,
+                    embedding=embeddings,
+                    metadatas=batch_metadatas
+                )
+
+                db.merge_from(temp_db)
+
+            if i + batch_size < len(texts):
+
+                await cl.Message(
+                    content="Waiting 65 seconds before next batch..."
+                ).send()
+
+                import asyncio
+                await asyncio.sleep(65)
 
         await cl.Message(
             content=f"FAISS built for {file.name}"
@@ -116,7 +149,6 @@ async def start():
         ).send()
 
         return
-
 
 @cl.on_message
 async def main(message: cl.Message):
