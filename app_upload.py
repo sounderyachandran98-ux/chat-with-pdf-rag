@@ -63,8 +63,8 @@ async def start():
             )
 
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=100
+        chunk_size=3000,
+        chunk_overlap=200
     )
 
     texts = []
